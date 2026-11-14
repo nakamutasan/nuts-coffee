@@ -1,0 +1,765 @@
+/* =========================================
+   nuts Coffee の見た目を決めるファイル
+   ========================================= */
+
+/* --- 1. 色の設定（ここを変えるとサイト全体の色が変わります） --- */
+:root {
+  --color-white: #fdfbf7;  /* 白（少し温かみのある白） */
+  --color-beige: #f3ebdf;  /* ベージュ */
+  --color-brown: #4a3f35;  /* 文字色（こげ茶） */
+  --color-green: #5b7553;  /* 差し色（落ち着いた緑） */
+  --color-line:  #e2d6c4;  /* 線の色 */
+
+  /* 「モワッ」と動くときの動き方（最初ゆっくり→速く→ゆっくり） */
+  --ease: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* --- 2. ページ全体 --- */
+* {
+  box-sizing: border-box; /* 幅の計算を分かりやすくするおまじない */
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden; /* 1画面で完結させるので、ページ全体はスクロールしない */
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-white);
+  color: var(--color-brown);
+  font-family: "Noto Sans JP", sans-serif;
+  line-height: 1.9;
+  letter-spacing: 0.05em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+h1, h2, h3 {
+  font-family: "Shippori Mincho", serif;
+  font-weight: 500;
+}
+
+/* --- 3. ヘッダー（上に浮いたカプセル型） --- */
+header {
+  position: fixed;
+  top: 16px;
+  left: 0;
+  right: 0;
+  z-index: 50; /* 開いた画面よりも手前 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: min(920px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 14px 32px;
+  border-radius: 999px;
+  background-color: rgba(74, 63, 53, 0.85);
+  color: var(--color-white);
+  box-shadow: 0 10px 30px rgba(74, 63, 53, 0.18);
+  backdrop-filter: blur(10px);
+}
+
+header .logo {
+  font-family: "Shippori Mincho", serif;
+  font-size: 1.15rem;
+  white-space: nowrap;
+}
+
+nav ul {
+  display: flex;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9rem;
+}
+
+/* マウスを乗せると下線が左から伸びる */
+nav a {
+  position: relative;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-beige);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s ease;
+}
+
+nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* --- 4. トップ（ドーナツが回る車輪） --- */
+#top {
+  --size: clamp(110px, 16vw, 210px);  /* ドーナツの大きさ */
+  --r: clamp(380px, 55vw, 760px);     /* 車輪の半径 */
+  --edge: 56%;                        /* 円のてっぺんの高さ（画面の上から） */
+  position: relative;
+  height: 100vh;
+  height: 100svh; /* スマホのアドレスバーを除いた高さ */
+  overflow: hidden;
+  background-color: var(--color-white);
+  transition: filter 0.9s var(--ease), scale 0.9s var(--ease);
+}
+
+/* 画面が開いている間、うしろのトップをぼかす */
+body.panel-open #top {
+  filter: blur(6px);
+  scale: 1.04;
+}
+
+.hero-text {
+  position: relative;
+  z-index: 2;
+  padding: 120px 24px 0;
+  text-align: center;
+}
+
+.hero-label {
+  margin: 0 0 12px;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  color: var(--color-green);
+}
+
+#top h1 {
+  margin: 0 0 12px;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+}
+
+/* 言葉の途中で改行されないように、かたまりごとに折り返す */
+#top h1 span {
+  display: inline-block;
+}
+
+.hero-hint {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #8a7d70;
+}
+
+.hero-stage {
+  position: absolute;
+  inset: 0;
+  touch-action: none;  /* スマホで指でなぞったとき、ブラウザの動きではなく車輪を回す */
+  user-select: none;   /* なぞったときに文字が選択されないように */
+  cursor: grab;        /* つかめる手のマーク */
+}
+
+.hero-stage:active {
+  cursor: grabbing;    /* つかんでいる手のマーク */
+}
+
+/* 写真をドラッグしたとき、画像だけが持ち上がらないように */
+.hero-stage img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+/* うしろの大きな円 */
+.wheel-disc {
+  position: absolute;
+  left: 50%;
+  top: var(--edge);
+  width: calc(var(--r) * 2);
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background-color: var(--color-beige);
+}
+
+.wheel-disc svg {
+  width: 100%;
+  height: 100%;
+}
+
+.wheel-disc text {
+  font-family: "Shippori Mincho", serif;
+  font-size: 24px;
+  letter-spacing: 4px;
+  fill: var(--color-brown);
+  opacity: 0.35;
+}
+
+/* ドーナツを並べる車輪（中心は画面のずっと下） */
+.wheel {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--edge) + var(--r));
+}
+
+/* 車輪の縁に 30度ずつ並べる */
+.wheel-item {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--size);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transform-origin: 0 0; /* 車輪の中心を軸に回す */
+  transform:
+    rotate(calc(var(--i) * 30deg))
+    translateY(calc(var(--r) * -1))
+    translate(-50%, calc(var(--size) / -2));
+}
+
+/* ふわふわ揺れる＋影（box-shadow だと四角い影になるので drop-shadow） */
+.donut-float {
+  display: block;
+  filter: drop-shadow(0 24px 24px rgba(74, 63, 53, 0.3));
+  transition: scale 0.4s ease;
+  animation: bob 5s ease-in-out calc(var(--i) * -0.8s) infinite alternate;
+}
+
+@keyframes bob {
+  from { transform: translateY(-8px) rotate(-3deg); }
+  to   { transform: translateY(8px) rotate(3deg); }
+}
+
+/* 写真をドーナツの形（外側の円＋真ん中の穴）に切り抜く */
+.donut {
+  position: relative;
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  overflow: hidden;
+  clip-path: circle(49% at 50% 50%);
+  -webkit-mask: radial-gradient(circle at var(--hx) var(--hy),
+    transparent calc(var(--size) * var(--hr)),
+    #000 calc(var(--size) * var(--hr) + 1px));
+  mask: radial-gradient(circle at var(--hx) var(--hy),
+    transparent calc(var(--size) * var(--hr)),
+    #000 calc(var(--size) * var(--hr) + 1px));
+  animation: spin 30s linear infinite; /* ゆっくり自転 */
+}
+
+.donut img {
+  position: absolute;
+  max-width: none;
+  width: var(--w);
+  left: var(--l);
+  top: var(--t);
+}
+
+/* 写真のどこを切り抜くか（ドーナツ3個とラテ1杯の位置） */
+.donut-0 { --w: 227.27%; --l: -63.64%;  --t: -25.57%;  --hx: 49.4%; --hy: 47.7%; --hr: 0.114; }
+.donut-1 { --w: 377.36%; --l: -201.51%; --t: -35.47%;  --hx: 50%;   --hy: 50%;   --hr: 0; }
+.donut-2 { --w: 232.56%; --l: -68.6%;   --t: -128.78%; --hx: 47.7%; --hy: 49.1%; --hr: 0.11; }
+.donut-3 { --w: 235.29%; --l: -69.41%;  --t: -233.24%; --hx: 50.6%; --hy: 47.6%; --hr: 0.106; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ドーナツの下の札（こだわり・メニュー…） */
+.item-label {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 6px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background-color: var(--color-brown);
+  color: var(--color-white);
+  font-size: 0.8rem;
+  line-height: 1.3;
+  white-space: nowrap;
+  transition: background-color 0.3s;
+}
+
+.item-label small {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  opacity: 0.7;
+}
+
+/* マウスを乗せると、少し大きくなって札が緑に */
+.wheel-item:hover .donut-float,
+.wheel-item:focus-visible .donut-float {
+  scale: 1.12;
+}
+
+.wheel-item:hover .item-label,
+.wheel-item:focus-visible .item-label {
+  background-color: var(--color-green);
+}
+
+.wheel-item:focus-visible {
+  outline: none;
+}
+
+.copyright {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  z-index: 2;
+  margin: 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #8a7d70;
+}
+
+/* --- 5. ドーナツを押すと開く画面（パネル） --- */
+.panel {
+  --x: 50%;  /* 円が広がり始める場所（押した場所。script.js が入れる） */
+  --y: 50%;
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  overflow-y: auto;          /* 中身が長いときは、この画面の中でスクロール */
+  overscroll-behavior: contain;
+  background-color: var(--panel-bg);
+  color: var(--panel-fg, var(--color-brown));
+  /* 閉じているときは、押した場所の小さな点 */
+  clip-path: circle(0 at var(--x) var(--y));
+  visibility: hidden;
+  transition:
+    clip-path 0.9s var(--ease),
+    visibility 0s linear 0.9s;
+}
+
+/* 開いているときは、画面全体をおおう大きな円 */
+.panel.is-open {
+  clip-path: circle(150% at var(--x) var(--y));
+  visibility: visible;
+  transition:
+    clip-path 0.9s var(--ease),
+    visibility 0s;
+}
+
+/* 画面ごとの色 */
+#concept { --panel-bg: var(--color-beige); }
+#menu    { --panel-bg: #e9ede3; }
+#gallery { --panel-bg: #3f322b; --panel-fg: var(--color-white); }
+#access  { --panel-bg: #f6e6e2; }
+
+/* 中身：ぼやけた状態から、はっきり浮かび上がる（モワッ） */
+.panel-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 130px 24px 80px;
+  text-align: center;
+  opacity: 0;
+  filter: blur(14px);
+  scale: 0.96;
+  transition: opacity 0.5s, filter 0.5s, scale 0.5s;
+}
+
+.panel.is-open .panel-inner {
+  opacity: 1;
+  filter: blur(0);
+  scale: 1;
+  transition: opacity 0.8s 0.3s, filter 0.8s 0.3s, scale 0.8s var(--ease) 0.3s;
+}
+
+/* 中の項目は、順番に少しずつ遅れて出てくる */
+.panel.is-open .item,
+.panel.is-open .gallery figure,
+.panel.is-open .access-wrap > *,
+.panel.is-open .instagram {
+  animation: fadeUp 0.8s ease-out calc(0.5s + var(--n, 0) * 0.1s) both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* 閉じるボタン */
+.panel-close {
+  position: fixed;
+  top: 96px;
+  right: max(16px, calc((100% - 1000px) / 2));
+  z-index: 1;
+  width: 48px;
+  height: 48px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.4s, background-color 0.3s, color 0.3s;
+}
+
+.panel-close:hover {
+  transform: rotate(90deg);
+  background-color: var(--panel-fg, var(--color-brown));
+  color: var(--panel-bg);
+}
+
+.panel-label {
+  margin: 0 0 4px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+}
+
+h2 {
+  margin: 0 0 48px;
+  font-size: 1.8rem;
+}
+
+/* 見出しの下に緑の短い線 */
+h2::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  margin: 16px auto 0;
+  background-color: var(--color-green);
+}
+
+h3 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  color: var(--color-green);
+}
+
+/* 横に3つ並べる箱（こだわり・メニュー） */
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.columns .item {
+  padding: 32px 24px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.55);
+}
+
+/* メニューの一覧 */
+#menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#menu li {
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--color-line);
+  font-size: 0.9rem;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+#menu li:hover {
+  color: var(--color-green);
+  border-color: var(--color-green);
+}
+
+/* ギャラリー */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.gallery figure {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s ease;
+}
+
+.gallery figure:hover img {
+  transform: scale(1.08);
+}
+
+.gallery figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 24px 12px 10px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+  color: var(--color-white);
+  font-size: 0.85rem;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.4s, transform 0.4s ease;
+}
+
+.gallery figure:hover figcaption {
+  opacity: 1;
+  transform: none;
+}
+
+/* スマホなど、マウスがない端末では説明文を最初から表示 */
+@media (hover: none) {
+  .gallery figcaption {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* アクセス */
+.access-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 32px;
+  text-align: left;
+}
+
+.access-wrap dl {
+  margin: 0;
+}
+
+.access-wrap dt {
+  margin-top: 16px;
+  font-weight: 500;
+  color: var(--color-green);
+}
+
+.access-wrap dt:first-child {
+  margin-top: 0;
+}
+
+.access-wrap dd {
+  margin: 0;
+}
+
+.map iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  border: 0;
+  border-radius: 14px;
+}
+
+.instagram {
+  margin-top: 48px;
+}
+
+/* こげ茶の丸いボタン */
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 8px 8px 28px;
+  border-radius: 999px;
+  background-color: var(--color-brown);
+  color: var(--color-white);
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.pill-btn span {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--color-white);
+  color: var(--color-brown);
+  transition: transform 0.3s;
+}
+
+.pill-btn:hover {
+  background-color: var(--color-green);
+}
+
+.pill-btn:hover span {
+  transform: translateX(4px) rotate(-45deg);
+}
+
+/* =========================================
+   画面の幅に合わせた調整（レスポンシブ対応）
+   ========================================= */
+
+/* --- タブレット（幅 900px 以下） --- */
+@media (max-width: 900px) {
+  .columns,
+  .access-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- スマホ（幅 600px 以下） --- */
+@media (max-width: 600px) {
+  /* ヘッダー：1段目に店名、2段目にリンク */
+  header {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 12px;
+    top: 10px;
+    padding: 10px 16px 12px;
+    border-radius: 24px;
+  }
+
+  nav {
+    order: 3;
+    width: 100%;
+  }
+
+  nav ul {
+    justify-content: center;
+    gap: 18px;
+    font-size: 0.8rem;
+  }
+
+  .hero-text {
+    padding-top: 130px;
+  }
+
+  /* スマホではドーナツを大きめに、円を少し上に */
+  #top {
+    --size: 150px;
+    --r: 360px;
+    --edge: 52%;
+  }
+
+  .panel-inner {
+    padding: 160px 16px 60px;
+  }
+
+  .panel-close {
+    top: 116px;
+    width: 40px;
+    height: 40px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 32px;
+  }
+
+  .gallery {
+    gap: 8px;
+  }
+}
+
+/* =========================================
+   動き（アニメーション）
+   ========================================= */
+
+/* --- オープニング画面：店名を見せてから、幕が上がるように消える --- */
+#opening {
+  position: fixed;
+  inset: 0;
+  z-index: 100; /* 一番手前に表示 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-beige);
+  animation: openingOut 0.9s cubic-bezier(0.7, 0, 0.3, 1) 1.8s forwards;
+}
+
+#opening p {
+  margin: 0;
+  font-family: "Shippori Mincho", serif;
+  font-size: 2.4rem;
+  letter-spacing: 0.15em;
+  color: var(--color-brown);
+  animation: fadeUp 1s ease-out 0.2s both;
+}
+
+#opening p::after {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-top: 12px;
+  background-color: var(--color-green);
+  transform-origin: left;
+  animation: openingLine 0.8s ease-in-out 0.8s both;
+}
+
+@media (max-width: 600px) {
+  #opening p {
+    font-size: 1.8rem;
+  }
+}
+
+@keyframes openingLine {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes openingOut {
+  to {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+}
+
+/* --- ヘッダー：上から降りてくる --- */
+@keyframes headerIn {
+  from { opacity: 0; transform: translateY(-30px); }
+  to   { opacity: 1; transform: none; }
+}
+
+header {
+  animation: headerIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) 2.2s both;
+}
+
+/* --- トップの文字：ぼかしから、はっきり浮かび上がる --- */
+@keyframes blurUp {
+  from { opacity: 0; transform: translateY(24px); filter: blur(8px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
+.hero-label { animation: blurUp 1s ease-out 2.3s both; }
+#top h1     { animation: blurUp 1.2s ease-out 2.5s both; }
+.hero-hint  { animation: blurUp 1s ease-out 3s both; }
+
+/* --- 車輪：下からせり上がってきて、そのあと回り続ける --- */
+@keyframes stageIn {
+  from { opacity: 0; transform: translateY(160px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero-stage {
+  animation: stageIn 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) 2.2s both;
+}
+
+/* 車輪の回転は script.js で動かしています（自動でゆっくり回る＋ドラッグで回せる） */
+
+/* --- 「動きを減らす」設定の人には、動きを止める（やさしさ対応） --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  #opening {
+    display: none;
+  }
+}

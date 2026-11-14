@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>nuts Coffee | 大阪・池田の街角カフェ</title>
+  <meta name="description" content="大阪府池田市の街角カフェ nuts Coffee。木のぬくもりを感じる静かな空間で、ひとりの時間をゆっくりお過ごしください。">
+  <!-- 文字のデザイン（Google Fonts） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Shippori+Mincho:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- オープニング画面（ページを開いたとき最初に出る店名） -->
+  <div id="opening" aria-hidden="true">
+    <p>nuts Coffee</p>
+  </div>
+
+  <!-- ヘッダー（上に浮いたカプセル型のメニュー） -->
+  <header>
+    <a href="#top" class="logo">nuts Coffee</a>
+    <nav>
+      <ul>
+        <li><a href="#concept">こだわり</a></li>
+        <li><a href="#menu">メニュー</a></li>
+        <li><a href="#gallery">ギャラリー</a></li>
+        <li><a href="#access">アクセス</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- トップ：ドーナツが回る車輪 -->
+    <section id="top">
+      <div class="hero-text">
+        <p class="hero-label">nuts Coffee ― Ikeda, Osaka</p>
+        <h1><span>木のぬくもりに包まれて、</span><span>自分だけの時間を。</span></h1>
+        <p class="hero-hint">ドーナツを押すと開きます。左右になぞると回せます</p>
+      </div>
+
+      <div class="hero-stage">
+        <!-- うしろの大きな円と、円に沿って回る文字 -->
+        <div class="wheel-disc" aria-hidden="true">
+          <svg viewBox="0 0 1000 1000">
+            <defs>
+              <path id="wheel-circle" d="M 500,500 m -470,0 a 470,470 0 1,1 940,0 a 470,470 0 1,1 -940,0"></path>
+            </defs>
+            <text>
+              <textPath href="#wheel-circle" textLength="2950" lengthAdjust="spacing">HOMEMADE DONUTS ・ HAND DRIP COFFEE ・ IKEDA OSAKA ・ HOMEMADE DONUTS ・ HAND DRIP COFFEE ・ IKEDA OSAKA ・ HOMEMADE DONUTS ・ HAND DRIP COFFEE ・ IKEDA OSAKA ・</textPath>
+            </text>
+          </svg>
+        </div>
+        <!-- ドーナツを並べる車輪（中身は script.js で作ります） -->
+        <div class="wheel"></div>
+      </div>
+
+      <p class="copyright"><small>&copy; nuts Coffee（ポートフォリオ用の架空のお店です）</small></p>
+    </section>
+
+    <!-- ここから下は、ドーナツを押すと開く画面 -->
+
+    <!-- こだわり -->
+    <section id="concept" class="panel" aria-label="こだわり">
+      <button type="button" class="panel-close" aria-label="閉じる">×</button>
+      <div class="panel-inner">
+        <p class="panel-label">CONCEPT</p>
+        <h2>こだわり</h2>
+        <div class="columns">
+          <div class="item">
+            <h3>ていねいに淹れる一杯</h3>
+            <p>注文を受けてから豆を挽き、一杯ずつハンドドリップで淹れています。</p>
+          </div>
+          <div class="item">
+            <h3>木のぬくもりを感じる空間</h3>
+            <p>無垢材のテーブルと椅子。やわらかな光の中で、静かな時間をお過ごしください。</p>
+          </div>
+          <div class="item">
+            <h3>ひとりでも過ごしやすく</h3>
+            <p>カウンター席を多めにご用意。読書や考えごとにもぴったりです。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- メニュー -->
+    <section id="menu" class="panel" aria-label="メニュー">
+      <button type="button" class="panel-close" aria-label="閉じる">×</button>
+      <div class="panel-inner">
+        <p class="panel-label">MENU</p>
+        <h2>メニュー</h2>
+        <div class="columns">
+          <div class="item">
+            <h3>ドリンク</h3>
+            <ul>
+              <li>ブレンドコーヒー　¥500</li>
+              <li>カフェラテ　¥580</li>
+              <li>自家製レモネード　¥550</li>
+            </ul>
+          </div>
+          <div class="item">
+            <h3>フード</h3>
+            <ul>
+              <li>季節野菜のサンドイッチ　¥850</li>
+              <li>厚切りトースト　¥600</li>
+              <li>キーマカレー　¥950</li>
+            </ul>
+          </div>
+          <div class="item">
+            <h3>スイーツ</h3>
+            <ul>
+              <li>いちごドーナツ　¥380</li>
+              <li>バニラドーナツ　¥380</li>
+              <li>チョコドーナツ　¥400</li>
+              <li>なめらかプリン　¥480</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ギャラリー -->
+    <section id="gallery" class="panel" aria-label="ギャラリー">
+      <button type="button" class="panel-close" aria-label="閉じる">×</button>
+      <div class="panel-inner">
+        <p class="panel-label">GALLERY</p>
+        <h2>ギャラリー</h2>
+        <div class="gallery">
+          <figure>
+            <img src="images/gallery1.jpg" alt="照明と棚が並ぶ木のカウンター" loading="lazy">
+            <figcaption>木のカウンター</figcaption>
+          </figure>
+          <figure>
+            <img src="images/gallery2.jpg" alt="光が差し込む窓ぎわのカウンター席" loading="lazy">
+            <figcaption>窓ぎわのカウンター席</figcaption>
+          </figure>
+          <figure>
+            <img src="images/gallery3.jpg" alt="ハンドドリップでコーヒーを淹れる様子" loading="lazy">
+            <figcaption>ハンドドリップ</figcaption>
+          </figure>
+          <figure>
+            <img src="images/gallery4.jpg" alt="木の椅子と丸テーブルが並ぶ店内" loading="lazy">
+            <figcaption>落ち着いた店内</figcaption>
+          </figure>
+          <figure>
+            <img src="images/gallery5.jpg" alt="コーヒー豆の上に並んだ自家製ドーナツ" loading="lazy">
+            <figcaption>自家製ドーナツ</figcaption>
+          </figure>
+          <figure>
+            <img src="images/gallery6.jpg" alt="緑に囲まれたテラス席" loading="lazy">
+            <figcaption>テラス席</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 営業時間・アクセス・Instagram -->
+    <section id="access" class="panel" aria-label="アクセス">
+      <button type="button" class="panel-close" aria-label="閉じる">×</button>
+      <div class="panel-inner">
+        <p class="panel-label">ACCESS</p>
+        <h2>営業時間・アクセス</h2>
+        <div class="access-wrap">
+          <dl>
+            <dt>住所</dt>
+            <dd>〒563-0000 大阪府池田市栄町0-0-0（架空の住所です）</dd>
+            <dt>営業時間</dt>
+            <dd>9:00〜18:00（L.O. 17:30）</dd>
+            <dt>定休日</dt>
+            <dd>毎週水曜日</dd>
+            <dt>アクセス</dt>
+            <dd>阪急宝塚線「池田駅」から徒歩5分</dd>
+          </dl>
+          <!-- 地図（住所が架空なので、近くの池田駅を表示しています） -->
+          <div class="map">
+            <iframe
+              src="https://www.google.com/maps?q=阪急池田駅&output=embed"
+              title="nuts Coffee 周辺の地図"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+        <div class="instagram">
+          <p>季節のメニューや店内の様子を Instagram で発信しています。</p>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="pill-btn">Instagramを見る <span>→</span></a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 動きをつけるための JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
