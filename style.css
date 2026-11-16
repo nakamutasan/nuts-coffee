@@ -356,6 +356,70 @@ body.panel-open #top {
 #menu    { --panel-bg: #e9ede3; }
 #gallery { --panel-bg: #3f322b; --panel-fg: var(--color-white); }
 #access  { --panel-bg: #f6e6e2; }
+#news    { --panel-bg: var(--color-white); }
+
+/* お知らせの一覧 */
+.news-list {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+  border-top: 1px solid var(--color-line);
+}
+
+.news-list li {
+  display: grid;
+  grid-template-columns: 7em auto 1fr;
+  align-items: baseline;
+  gap: 6px 18px;
+  padding: 20px 4px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.panel.is-open .news-list li {
+  animation: fadeUp 0.8s ease-out calc(0.5s + var(--n, 0) * 0.1s) both;
+}
+
+.news-list time {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+
+.news-tag {
+  justify-self: start;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  line-height: 1.9;
+  color: var(--color-white);
+  background-color: var(--color-green);
+  white-space: nowrap;
+}
+
+.news-tag:empty {
+  display: none;
+}
+
+.news-list p {
+  margin: 0;
+}
+
+.news-list li.no-tag p {
+  grid-column: 2 / -1;
+}
+
+@media (max-width: 600px) {
+  .news-list li {
+    grid-template-columns: auto 1fr;
+  }
+
+  .news-list p,
+  .news-list li.no-tag p {
+    grid-column: 1 / -1;
+  }
+}
 
 /* 中身：ぼやけた状態から、はっきり浮かび上がる（モワッ） */
 .panel-inner {
@@ -630,8 +694,10 @@ h3 {
 
   nav ul {
     justify-content: center;
-    gap: 18px;
+    gap: 6px 14px;
+    flex-wrap: wrap;
     font-size: 0.8rem;
+    white-space: nowrap; /* 「こだわり」などの言葉の途中で折り返さない */
   }
 
   .hero-text {
