@@ -829,3 +829,11 @@ header {
     display: none;
   }
 }
+
+/* --- 2回目からは、オープニングを飛ばしてすぐ表示（index.html の opened と連動） --- */
+html.opened #opening { display: none; }
+html.opened header { animation-delay: 0s; }
+html.opened .hero-label { animation-delay: 0.1s; }
+html.opened #top h1 { animation-delay: 0.3s; }
+html.opened .hero-hint { animation-delay: 0.8s; }
+html.opened .hero-stage { animation-delay: 0s; }

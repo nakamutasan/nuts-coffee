@@ -4,12 +4,77 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>nuts Coffee | 大阪・池田の街角カフェ</title>
-  <meta name="description" content="大阪府池田市の街角カフェ nuts Coffee。木のぬくもりを感じる静かな空間で、ひとりの時間をゆっくりお過ごしください。">
+  <meta name="description" content="大阪府池田市の街角カフェ nuts Coffee（ポートフォリオ用の架空のお店です）。木のぬくもりを感じる静かな空間で、ひとりの時間をゆっくりお過ごしください。">
+  <!-- 見本サイトなので、Google などの検索結果には出さない（URL を知っている人は見られます） -->
+  <meta name="robots" content="noindex">
+
+  <!-- 検索エンジン向け：このアドレスが正式なページです -->
+  <link rel="canonical" href="https://nuts-coffee.vercel.app/">
+
+  <!-- サイトのアイコン（ブラウザのタブ・スマホのホーム画面に出る） -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#4a3b31">
+
+  <!-- SNS用の情報：LINE や Instagram でアドレスを送ると、写真つきのカードで表示される -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="nuts Coffee">
+  <meta property="og:title" content="nuts Coffee | 大阪・池田の街角カフェ">
+  <meta property="og:description" content="大阪府池田市の街角カフェ nuts Coffee（ポートフォリオ用の架空のお店です）。木のぬくもりを感じる静かな空間で、ひとりの時間をゆっくりお過ごしください。">
+  <meta property="og:url" content="https://nuts-coffee.vercel.app/">
+  <meta property="og:image" content="https://nuts-coffee.vercel.app/images/ogp.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- 構造化データ：お店などの情報を Google が読み取りやすい形で書いたもの（住所・電話は架空です） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    "name": "nuts Coffee",
+    "description": "大阪府池田市の街角カフェ（ポートフォリオ用の架空のお店です）。",
+    "servesCuisine": "コーヒー",
+    "address": {
+      "@type": "PostalAddress",
+      "postalCode": "563-0000",
+      "addressRegion": "大阪府",
+      "addressLocality": "池田市",
+      "streetAddress": "栄町0-0-0",
+      "addressCountry": "JP"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "09:00",
+        "closes": "18:00"
+      }
+    ],
+    "url": "https://nuts-coffee.vercel.app/",
+    "image": "https://nuts-coffee.vercel.app/images/ogp.jpg"
+  }
+  </script>
   <!-- 文字のデザイン（Google Fonts） -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Shippori+Mincho:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <!-- オープニング演出は、この端末で初めて開いたときだけ。2回目からは飛ばす -->
+  <script>
+    try {
+      if (localStorage.getItem('nuts-opened')) document.documentElement.classList.add('opened');
+      else localStorage.setItem('nuts-opened', '1');
+    } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 

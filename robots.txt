@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nuts-coffee.vercel.app/sitemap.xml
